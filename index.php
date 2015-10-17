@@ -11,7 +11,13 @@ require_once('AutoLoad.php');
 
 echo getHeaders();
 
-echo getForm();
+if(isset($_POST['username'])){
+    Application::processPost();
+    echo "Thanks for applying! We will review your application as soon as possible and notify you via email.";
+}
+else{
+    echo getForm();
+}
 
 function getForm(){
     $div = '<div class="outer"><div class="middle"><div class="inner">';
@@ -20,7 +26,15 @@ function getForm(){
     $div .= 'What is your Minecraft username? <input id="username" type="text" name="username"></input><br><br>';
     $div .= 'What country are you playing from? <input id="country" type="text" name="country"></input><br><br>';
     $div .= 'What year were you born? <select id="year" name="year"><option value="">Choose one</option></select><br><br>';
-    $div .= 'How did you hear about Spinalcraft? <input id="heard" type="text" name="heard"></input><br><br>';
+    $select = '<select id="heard" name="heard">'
+            . '<option value="">Choose one</option>'
+            . '<option value="mcsl">Minecraft Server List</option>'
+            . '<option value="pmc">Planet Minecraft</option>'
+            . '<option value="reddit">Reddit</option>'
+            . '<option value="friend">Friend/Family</option>'
+            . '</select>';
+    $div .= "Where did you hear about Spinalcraft? $select<br><br>";
+    $div .= 'Email address <font size="1">(For notification only):</font> <input id="email" type="text" name="email"></input><br><br>';
 
     $div .= '<input id="submitButton" type="button" value="Submit"></input>';
 
