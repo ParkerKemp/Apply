@@ -34,7 +34,8 @@ function getForm(){
             . '<option value="friend">Friend/Family</option>'
             . '</select>';
     $div .= "Where did you hear about Spinalcraft? $select<br><br>";
-    $div .= 'Email address <font size="1">(For notification only):</font> <input id="email" type="text" name="email"></input><br><br>';
+    $div .= 'Email address: <br><font size="1">(For notification only)</font> <input id="email" type="text" name="email"></input><br><br>';
+    $div .= 'Additional comments: <br><font size="1">(optional)</font> <textarea name="comment"></textarea>';
 
     $div .= '<input id="submitButton" type="button" value="Submit"></input>';
 
