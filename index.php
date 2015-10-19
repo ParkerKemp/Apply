@@ -32,6 +32,7 @@ function getForm(){
             . '<option value="pmc">Planet Minecraft</option>'
             . '<option value="reddit">Reddit</option>'
             . '<option value="friend">Friend/Family</option>'
+            . '<option value="other">Other</option>'
             . '</select>';
     $div .= "Where did you hear about Spinalcraft? $select<br><br>";
     $div .= 'Email address: <br><font size="1">(For notification only)</font> <input id="email" type="text" name="email"></input><br><br>';
