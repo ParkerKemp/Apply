@@ -27,7 +27,27 @@ function validateUsername(){
         validationError(document.getElementById("username"), "Please enter a valid username.");
         return false;
     }
-    return true;
+    
+    var good = true;
+    
+    $.ajax({
+        async: false,
+        type: "POST",
+        url: "index.php",
+        data: {
+            redirectFilename: "php/scripts/ValidateUsername.php",
+            username: username
+        },
+        success: function(response){
+            if(response !== "good")
+                good = false;
+        }
+    });
+    
+    if(!good)
+        validationError(document.getElementById("username"), "This username does not exist!");
+    
+    return good;
 }
 
 function validateCountry(){

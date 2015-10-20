@@ -1,3 +1,13 @@
+<?php
+
+require_once 'AutoLoad.php';
+
+if(isset($_POST['redirectFilename'])){
+    require_once $_POST['redirectFilename'];
+    die();
+}
+?>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -5,9 +15,8 @@
         <title></title>
     </head>
     <body>
-<?php
 
-require_once('AutoLoad.php');
+<?php
 
 echo getHeaders();
 
