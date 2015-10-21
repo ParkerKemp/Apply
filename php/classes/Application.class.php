@@ -1,10 +1,19 @@
 <?php
 
-class Application {    
+class Application {
     public static function processPost(){
-        $query = "INSERT INTO applications (username, country, year, heard, email, comment) VALUES (?, ?, ?, ?, ?, ?)";
+        
+        $profile = ProfileUtils::getProfile($_POST['username']);
+        if($profile == null)
+            return false;
+        $result = $profile->getProfileAsArray();
+        $uuid = $result['uuid'];
+        $username = $result['username'];
+        
+        $query = "INSERT INTO applications (uuid, username, country, year, heard, email, comment) VALUES (?, ?, ?, ?, ?, ?, ?)";
         $stmt = Database::getInstance()->prepare($query);
-        $stmt->bind_param("ssisss", $_POST['username'], $_POST['country'], $_POST['year'], $_POST['heard'], $_POST['email'], $_POST['comment']);
+        $stmt->bind_param("sssisss", $uuid, $username, $_POST['country'], $_POST['year'], $_POST['heard'], $_POST['email'], $_POST['comment']);
         $stmt->execute();
+        return true;
     }
 }
