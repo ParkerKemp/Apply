@@ -7,6 +7,7 @@ class Database {
     private function __construct(){
         $this->conn = new mysqli('localhost', 'root', 'password');
         $this->connect();
+        $this->createTables();
     }
     
     public static function getInstance(){
@@ -18,6 +19,12 @@ class Database {
     
     private function connect(){
         $this->conn->select_db('Manager');
+    }
+    
+    private function createTables(){
+        $query = "CREATE TABLE IF NOT EXISTS referredPlayers (id INT AUTO_INCREMENT PRIMARY KEY, player VARCHAR(32) NOT NULL, referrer VARCHAR(32) NOT NULL)";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
     }
     
     public function prepare($query){

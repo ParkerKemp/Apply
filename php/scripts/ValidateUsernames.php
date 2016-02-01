@@ -12,13 +12,15 @@ foreach($usernames as $username){
 valid();
 
 function validate($username){
-    $profile = ProfileUtils::getProfile($username);
-    if($profile != null){
-        $result = $profile->getProfileAsArray();
-        return $result != null;
-    }
-    else
-        return false;
+    $user = User::fromUsername($username);
+    return $user != null;
+//    $profile = ProfileUtils::getProfile($username);
+//    if($profile != null){
+//        $result = $profile->getProfileAsArray();
+//        return $result != null;
+//    }
+//    else
+//        return false;
 }
 
 function invalidUsername($username){

@@ -5,7 +5,7 @@ $(document).ready(function(){
         if(!validateForm())
             return;
 
-//        $("#registrationForm").submit();
+        $("#registrationForm").submit();
     });
     
     $('#heard').change(function(e){
