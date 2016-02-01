@@ -7,6 +7,16 @@ $(document).ready(function(){
 
         $("#registrationForm").submit();
     });
+    
+    $('#heard').change(function(e){
+        var value = $('#heard').val();
+        if(value === "players"){
+            $('#referrersP').attr("style", "");
+        }
+        else{
+            $('#referrersP').attr("style", 'display:none;');
+        }
+    });
 });
 
 function validateForm(){
@@ -16,7 +26,7 @@ function validateForm(){
     good &= validateCountry();
     good &= validateYear();
     good &= validateHeard();
-    good &= validateEmail();
+//    good &= validateEmail();
     
     return good;
 }

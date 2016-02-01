@@ -10,10 +10,26 @@ class Application {
         $uuid = $result['uuid'];
         $username = $result['username'];
         
-        $query = "INSERT INTO applications (uuid, username, country, year, heard, email, comment) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        $query = "INSERT INTO applications (uuid, username, country, year, heard, comment) VALUES (?, ?, ?, ?, ?, ?, ?)";
         $stmt = Database::getInstance()->prepare($query);
-        $stmt->bind_param("sssisss", $uuid, $username, $_POST['country'], $_POST['year'], $_POST['heard'], $_POST['email'], $_POST['comment']);
+        $stmt->bind_param("sssisss", $uuid, $username, $_POST['country'], $_POST['year'], $_POST['heard'], $_POST['comment']);
         $stmt->execute();
+        
+        $query = "INSERT INTO pendingNotification (uuid) VALUES (?)";
+        $stmt = Database::getInstance()->prepare($query);
+        $stmt->bind_param("s", $uuid);
+        $stmt->execute();
+        
+        static::whitelistAdd($username);
         return true;
+    }
+    
+    private static function whitelistAdd($username){
+        $socket = socket_create(AF_UNIX, SOCK_STREAM, 0);
+	socket_set_block($socket);
+        socket_connect($socket, "/home/minecraft/server/spinal/plugins/Spinalpack/sockets/command.sock");
+        
+        if(socket_write($socket, "whitelist add $username") === false)
+            ;//Socket error?
     }
 }
