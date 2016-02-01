@@ -5,7 +5,7 @@ $(document).ready(function(){
         if(!validateForm())
             return;
 
-        $("#registrationForm").submit();
+//        $("#registrationForm").submit();
     });
     
     $('#heard').change(function(e){
@@ -26,6 +26,7 @@ function validateForm(){
     good &= validateCountry();
     good &= validateYear();
     good &= validateHeard();
+    good &= validateReferrers();
 //    good &= validateEmail();
     
     return good;
@@ -45,11 +46,12 @@ function validateUsername(){
         type: "POST",
         url: "index.php",
         data: {
-            redirectFilename: "php/scripts/ValidateUsername.php",
-            username: username
+            redirectFilename: "php/scripts/ValidateUsernames.php",
+            usernames: [username]
         },
         success: function(response){
-            if(response !== "good")
+            var json = JSON.parse(response);
+            if(json.status !== "good")
                 good = false;
         }
     });
@@ -79,12 +81,52 @@ function validateYear(){
 }
 
 function validateHeard(){
-    var heard = $("#year").val();
+    var heard = $("#heard").val();
     if(heard === ""){
         validationError(document.getElementById("heard"), "Please choose an answer.");
         return false;
     }
     return true;
+}
+
+function validateReferrers(){
+    var heard = $("#heard").val();
+    if(heard !== "players")
+        return true;
+    
+    var referrers = $("#referrers").val();
+    var array = referrers.split(',');
+    for(var key in array){
+        array[key] = array[key].trim();
+    }
+    
+    var good = true;
+    var username;
+    
+    $.ajax({
+        async: false,
+        type: "POST",
+        url: "index.php",
+        data: {
+            redirectFilename: "php/scripts/ValidateUsernames.php",
+            usernames: array
+        },
+        success: function(response){
+            var json = JSON.parse(response);
+            if(json.status !== "good"){
+                console.log('not good');
+                good = false;
+                username = json.username;
+            }
+        }
+    });
+    
+    
+    if(!good){
+        validationError(document.getElementById("referrers"), "Username " + username + " does not exist!");
+    }
+    
+    return good;
 }
 
 function validateEmail(){
@@ -110,9 +152,10 @@ function populateYearInput(){
 
 function validationError(input, errorMessage){
     var error = document.createElement("p");
+    
     var form = document.getElementById("registrationForm");
     error.innerHTML = errorMessage;
     error.className = "error";
     
-    form.insertBefore(error, input);
+    input.parentNode.insertBefore(error, input);
 }
