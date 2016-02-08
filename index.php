@@ -14,7 +14,7 @@ if(isset($_POST['redirectFilename'])){
         <meta charset="UTF-8">
         <title></title>
     </head>
-    <body background="resources/background.png">
+    <body background="resources/background2.png">
 
 <?php
 
@@ -53,7 +53,7 @@ function getForm(){
     $div .= "Where did you hear about Spinalcraft?* $select<br><br>";
 //    $div .= 'Email address: <br><font size="1">(For notification only)</font> <input id="email" type="text" name="email"></input><br><br>';
     $div .= '<p id="referrersP" style="display:none;">List any players who referred you to Spinalcraft (comma separated): <input id="referrers" type="text" name="referrers"></input><br><br></p>';
-    $div .= 'Additional comments: <br> <textarea name="comment"></textarea>';
+    $div .= 'Tell us something about yourself: <br> <textarea name="comment"></textarea>';
 
     $div .= '<input id="submitButton" type="button" value="Submit"></input>';
 
