@@ -14,7 +14,7 @@ if(isset($_POST['redirectFilename'])){
         <meta charset="UTF-8">
         <title></title>
     </head>
-    <body background="resources/background2.png">
+    <body background="resources/background2.jpg" style="background-size: 1920px 1080px; background-repeat: no-repeat;">
 
 <?php
 
