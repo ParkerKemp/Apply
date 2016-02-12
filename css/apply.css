@@ -20,14 +20,14 @@ textarea {
 }
 
 .inner {
-    padding:60px 90px 60px 90px;
+    padding:40px 60px 40px 60px;
     margin-left: auto;
     margin-right: auto; 
-    width: 300px;
-    background-color: rgba(255,255,255,.5);
-    border-color:black;
+    width: 400px;
+    background-color: rgba(255,255,255,.75);
+/*    border-color:black;
     border-width:1px;
-    border-style:solid;
+    border-style:solid;*/
 }
 
 .inner input {
