@@ -39,6 +39,7 @@
 //  echo 'username: '.$result['username'].'<br>';
 //  echo 'uuid: '.$result['uuid'].'<br/>';
 //}
+
 /*
  * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *                    OutPuts                        *
@@ -51,6 +52,7 @@
 class MinecraftProfile {
     private $username;
     private $uuid;
+    
     /**
      * @param string $username The player's username.
      * @param string $uuid The player's UUID.
@@ -59,32 +61,50 @@ class MinecraftProfile {
         $this->username = $username;
         $this->uuid = $uuid;
     }
+    
     /**
      * @return string The player's username.
      */
     public function getUsername() {
         return $this->username;
     }
+    
     /**
      * @return string The player's UUID.
      */
     public function getUUID() {
-        return $this->uuid;
+        return static::formatUUID($this->uuid);
     }
+    
     /**
      * @return array Returns an array with keys of 'properties, usernname and uuid'.
      */
     public function getProfileAsArray() {
-        return array("username" => $this->username, "uuid" => $this->uuid);
+        return array("username" => $this->username, "uuid" => static::formatUUID($this->uuid));
+    }
+    
+    /**
+    * @param $uuid string UUID to format
+    * @return string Properly formatted UUID (According to UUID v4 Standards xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx WHERE y = 8,9,A,or B and x = random digits.)
+    */
+    private static function formatUUID($uuid) {
+        $uid = "";
+        $uid .= substr($uuid, 0, 8)."-";
+        $uid .= substr($uuid, 8, 4)."-";
+        $uid .= substr($uuid, 12, 4)."-";
+        $uid .= substr($uuid, 16, 4)."-";
+        $uid .= substr($uuid, 20);
+        return $uid;
     }
 }
 class ProfileUtils {
+    
     /**
      * @param string $identifier Either the player's Username or UUID.
      * @param int $timeout The length in seconds of the http request timeout.
      * @return MinecraftProfile|null Returns null if fetching of profile failed. Else returns completed user profile.
      */
-    public static function getProfile($identifier, $timeout = 5) {
+    private static function getProfile($identifier, $timeout = 5) {
         if(strlen($identifier) <= 16){
             $uuid = ProfileUtils::getUUIDFromUsername($identifier, $timeout);
             if($uuid == null)
@@ -103,12 +123,21 @@ class ProfileUtils {
             return null;
         }
     }
+    
+    public static function getProfileFromUuid($uuid){
+        return static::getProfile($uuid);
+    }
+    
+    public static function getProfileFromUsername($username){
+        return static::getProfile($username);
+    }
+    
     /**
      * @param $username string Minecraft username.
      * @param int $timeout http timeout in seconds
      * @return array (Key => Value) "username" => Minecraft username (properly capitalized) "uuid" => Minecraft UUID
      */
-    public static function getUUIDFromUsername($username) {
+    private static function getUUIDFromUsername($username) {
         if(strlen($username) > 16)
             return array("username" => "", "uuid" => "");
         $url = 'https://api.mojang.com/users/profiles/minecraft/' . $username;
@@ -121,18 +150,5 @@ class ProfileUtils {
         }
         else
             return null;
-    }
-    /**
-    * @param $uuid string UUID to format
-    * @return string Properly formatted UUID (According to UUID v4 Standards xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx WHERE y = 8,9,A,or B and x = random digits.)
-    */
-    public static function formatUUID($uuid) {
-        $uid = "";
-        $uid .= substr($uuid, 0, 8)."-";
-        $uid .= substr($uuid, 8, 4)."-";
-        $uid .= substr($uuid, 12, 4)."-";
-        $uid .= substr($uuid, 16, 4)."-";
-        $uid .= substr($uuid, 20);
-        return $uid;
     }
 }

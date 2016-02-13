@@ -4,6 +4,8 @@ class Application {
     public static function processPost(){
         
         $user = User::fromUsername($_POST['username']);
+        if($user == null)
+            return false;
         $uuid = $user->uuid;
         $username = $user->username;
         
