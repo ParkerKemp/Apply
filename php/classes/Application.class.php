@@ -54,14 +54,17 @@ class Application {
         $stmt->execute();
     }
     
-    private static function whitelistAdd($username){
-        $socket = socket_create(AF_UNIX, SOCK_STREAM, 0);
-	socket_set_block($socket);
-        socket_connect($socket, "/home/minecraft/server/spinal/plugins/Spinalpack/sockets/command.sock");
+    private static function sendCommand($command){
+        $socket = fsockopen("unix:///home/minecraft/server/spinal/plugins/Spinalpack/sockets/command.sock");
         
-        if(socket_write($socket, "pex user $username group add user") === false)
-            ;//Socket error?
-        if(socket_write($socket, "whitelist add $username") === false)
-            ;//Socket error?
+        if(fwrite($socket, $command) === false)
+            return false;
+        fclose($socket);
+        return true;
+    }
+    
+    private static function whitelistAdd($username){
+        static::sendCommand("pex user $username group add user");
+        static::sendCommand("whitelist add $username");
     }
 }
