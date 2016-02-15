@@ -39,8 +39,10 @@ class Application {
         }
         foreach($referrers as $username){
             $user = User::fromUsername($username);
-            $referrerUuid = $user->uuid;
-            static::insertReferrer($playerUuid, $referrerUuid);
+            if($user != null){
+                $referrerUuid = $user->uuid;
+                static::insertReferrer($playerUuid, $referrerUuid);
+            }
         }
     }
     
@@ -57,6 +59,8 @@ class Application {
 	socket_set_block($socket);
         socket_connect($socket, "/home/minecraft/server/spinal/plugins/Spinalpack/sockets/command.sock");
         
+        if(socket_write($socket, "pex user $username group add user") === false)
+            ;//Socket error?
         if(socket_write($socket, "whitelist add $username") === false)
             ;//Socket error?
     }

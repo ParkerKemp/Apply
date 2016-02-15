@@ -94,7 +94,9 @@ function validateReferrers(){
     if(heard !== "players")
         return true;
     
-    var referrers = $("#referrers").val();
+    var referrers = $("#referrers").val().trim();
+    if(referrers === '')
+        return true;
     var array = referrers.split(',');
     for(var key in array){
         array[key] = array[key].trim();
