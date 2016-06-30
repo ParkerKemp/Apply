@@ -24,6 +24,7 @@ class Application {
         }
         
         static::whitelistAdd($username);
+        static::announcePlayer($uuid);
         return true;
     }
     
@@ -53,6 +54,15 @@ class Application {
         socket_connect($socket, EnvironmentVars::getSocketPath());
         
         if(socket_write($socket, "whitelist add $username") === false)
+            ;//Socket error?
+    }
+    
+    private static function announcePlayer($uuid){
+        $socket = socket_create(AF_UNIX, SOCK_STREAM, 0);
+	socket_set_block($socket);
+        socket_connect($socket, EnvironmentVars::getSocketPath());
+        
+        if (socket_write($socket, "__announce__ $uuid") === false)
             ;//Socket error?
     }
 }
