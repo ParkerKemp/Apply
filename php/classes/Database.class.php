@@ -22,7 +22,7 @@ class Database {
     }
     
     private function createTables(){
-        $query = "CREATE TABLE IF NOT EXISTS applications (uuid VARCHAR(32) PRIMARY KEY, username VARCHAR(32), "
+        $query = "CREATE TABLE IF NOT EXISTS applications (uuid VARCHAR(36) PRIMARY KEY, username VARCHAR(32), "
                 . "country VARCHAR(64), year INT, heard VARCHAR(32), comment MEDIUMTEXT, status INT DEFAULT 0, "
                 . "staffActor VARCHAR(32), actionTimestamp TIMESTAMP NULL, timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP, announced TINYINT NOT NULL DEFAULT 0)";
         $stmt = $this->conn->prepare($query);
