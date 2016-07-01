@@ -29,7 +29,7 @@ if(isset($_POST['username'])){
         echo '<a href="http://www.reddit.com/r/spinalcraft">Back to the subreddit</a>';
     }
     else
-        echo "Something went wrong! You may have submitted an invalid username. Please try again.";
+        echo "Something went wrong! You may have submitted an invalid username, or a username that was already registered. Please try again.";
 }
 else{
     echo getForm();

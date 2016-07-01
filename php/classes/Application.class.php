@@ -12,7 +12,9 @@ class Application {
         $query = "INSERT INTO applications (uuid, username, country, year, heard, comment) VALUES (?, ?, ?, ?, ?, ?)";
         $stmt = Database::getInstance()->prepare($query);
         $stmt->bind_param("sssiss", $uuid, $username, $_POST['country'], $_POST['year'], $_POST['heard'], $_POST['comment']);
-        $stmt->execute();
+        $success = $stmt->execute();
+        if(!$success)
+          return false;
         
 //        $query = "INSERT INTO pendingNotification (uuid) VALUES (?)";
 //        $stmt = Database::getInstance()->prepare($query);
