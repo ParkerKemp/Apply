@@ -27,6 +27,7 @@ class Application {
         
         static::whitelistAdd($username);
         static::announcePlayer($uuid);
+        static::promotePlayer($username);
         return true;
     }
     
@@ -65,6 +66,15 @@ class Application {
         socket_connect($socket, EnvironmentVars::getSocketPath());
         
         if (socket_write($socket, "__announce__ $uuid") === false)
+            ;//Socket error?
+    }
+    
+    private static function promotePlayer($username){
+        $socket = socket_create(AF_UNIX, SOCK_STREAM, 0);
+	socket_set_block($socket);
+        socket_connect($socket, EnvironmentVars::getSocketPath());
+        
+        if (socket_write($socket, "pex promote $username automatic") === false)
             ;//Socket error?
     }
 }
