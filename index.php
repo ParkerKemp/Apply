@@ -41,21 +41,22 @@ function getForm(){
 
     $div .= 'What is your Minecraft username?* <input id="username" type="text" name="username"></input><br><br>';
     $div .= 'What country are you playing from?* <input id="country" type="text" name="country"></input><br><br>';
-    $div .= 'What year were you born?* <br><select id="year" name="year"><option value="">Choose one</option></select><br><br>';
-    $select = '<select id="heard" name="heard">'
+    $div .= 'What year were you born?* <br><select id="year" name="year" style="max-width: 100px"><option value="">Choose one</option></select><br><br>';
+    $select = '<select id="heard" name="heard" style="max-width: 400px">'
             . '<option value="">Choose one</option>'
             . '<option value="mcsl">Minecraft Server List</option>'
             . '<option value="pmc">Planet Minecraft</option>'
             . '<option value="reddit">Reddit</option>'
             . '<option value="players">Other Player(s)</option>'
+						. '<option value="other">I was just typing random strings of characters into the address bar and now I\'m here</option>'
             . '<option value="other">Other</option>'
             . '</select>';
     $div .= "Where did you hear about Spinalcraft?* $select<br><br>";
 //    $div .= 'Email address: <br><font size="1">(For notification only)</font> <input id="email" type="text" name="email"></input><br><br>';
     $div .= '<p id="referrersP" style="display:none;">List any players who referred you to Spinalcraft (comma separated): <input id="referrers" type="text" name="referrers"></input><br><br></p>';
-    $div .= 'Tell us something about yourself: <br> <textarea name="comment"></textarea>';
+    $div .= 'Tell us something about yourself: <br> <textarea name="comment" style="width: 400px; padding: 0px;"></textarea>';
 
-    $div .= '<input id="submitButton" type="button" value="Submit"></input>';
+    $div .= '<input id="submitButton" type="button" value="Submit" style="width: 400px;"></input>';
 
     $div .= '</form></div></div></div>';
     return $div;
